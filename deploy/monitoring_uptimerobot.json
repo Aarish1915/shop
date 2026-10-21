@@ -1,0 +1,32 @@
+{
+  "monitors": [
+    {
+      "friendly_name": "CleanNotes PrintFlow POS (B2B Health Probe)",
+      "url": "https://b2b.cleannotes.app/api/health",
+      "type": 1,
+      "sub_type": 1,
+      "interval": 60,
+      "timeout": 10,
+      "http_method": 1,
+      "keyword_type": 1,
+      "keyword_value": "\"status\":\"healthy\"",
+      "alert_contacts": [
+        {
+          "type": "webhook",
+          "target": "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=5279222574"
+        }
+      ]
+    },
+    {
+      "friendly_name": "CleanNotes PrintFlow POS (Commercial Landing)",
+      "url": "https://b2b.cleannotes.app/landing",
+      "type": 1,
+      "sub_type": 1,
+      "interval": 120,
+      "timeout": 10,
+      "http_method": 1,
+      "keyword_type": 1,
+      "keyword_value": "Toner Arbitrage Calculator"
+    }
+  ]
+}

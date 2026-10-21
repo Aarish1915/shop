@@ -1,0 +1,42 @@
+# Node dependencies and build artifacts
+node_modules/
+dist/
+.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python cache and environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+
+# Testing and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local databases and SQLite WAL files
+*.db
+*.sqlite
+*.sqlite3
+*-wal
+*-shm
+server/data/*.db
+
+# Environment and sensitive keys
+.env
+.env.local
+.env.production
+*.pem
+*.key
+
+# Operating system noise
+.DS_Store
+Thumbs.db

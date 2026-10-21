@@ -1,0 +1,59 @@
+name: CleanNotes Shopkeeper POS CI/CD Gate
+
+on:
+  push:
+    paths:
+      - 'apps/shopkeeper-web/**'
+    branches:
+      - main
+  pull_request:
+    paths:
+      - 'apps/shopkeeper-web/**'
+    branches:
+      - main
+
+jobs:
+  shopkeeper-pos-ci:
+    name: Shopkeeper POS Quality & Security Gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: apps/shopkeeper-web/server/requirements.txt
+
+      - name: Install Server Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r apps/shopkeeper-web/server/requirements.txt pytest
+
+      - name: Run Shopkeeper Backend & Security Tests
+        run: |
+          python -m pytest apps/shopkeeper-web/tests/test_shopkeeper_api.py -v
+
+      - name: Gate 4-3 Dependency Security Audit (pip-audit)
+        run: |
+          pip install pip-audit
+          pip-audit -r apps/shopkeeper-web/server/requirements.txt
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: apps/shopkeeper-web/package-lock.json
+
+      - name: Build Shopkeeper Web Frontend
+        working-directory: ./apps/shopkeeper-web
+        run: |
+          npm ci
+          npm run build
+
+      - name: Verify Docker Container Build
+        run: |
+          docker build -f apps/shopkeeper-web/deploy/Dockerfile -t cleannotes-pos:test apps/shopkeeper-web

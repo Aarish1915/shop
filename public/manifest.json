@@ -1,0 +1,51 @@
+{
+  "name": "CleanNotes DropDesk — Xerox POS",
+  "short_name": "DropDesk",
+  "description": "Xerox Shopkeeper High-Speed PDF Slide Whitening & Direct Printing POS",
+  "start_url": "/dropdesk",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0e1511",
+  "theme_color": "#facc15",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "share_target": {
+    "action": "/api/b2b/process-batch",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "files": [
+        {
+          "name": "files",
+          "accept": ["application/pdf", ".pdf"]
+        }
+      ]
+    }
+  },
+  "shortcuts": [
+    {
+      "name": "Whiten 10 PDFs",
+      "url": "/dropdesk?mode=batch",
+      "description": "Bulk batch whitening for customer PDFs"
+    },
+    {
+      "name": "Daily Savings Ledger",
+      "url": "/dropdesk?view=stats",
+      "description": "View today's toner savings"
+    }
+  ]
+}
